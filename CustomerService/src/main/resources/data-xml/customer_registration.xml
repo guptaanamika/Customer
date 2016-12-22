@@ -1,0 +1,48 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="customerRegistration">
+
+	<resultMap id="customer_reg_result_map" type="com.customer.model.CustomerInfo">
+		<result property="customerId" column="customer_id" />
+		<result property="name" column="name" />
+		<result property="emailId" column="email_id" />
+		<result property="contactNumber" column="contact_number" />
+		<result property="rating" column="rating" />
+		<result property="labelledAddress" column="labelled_address" />
+		<result property="status" column="status" />
+		<result property="createdOn" column="created_on" />
+		<result property="updatedOn" column="updated_on" />
+	</resultMap>
+
+	<sql id="customer_reg_result_set">
+		customer_id,name,email_id,contact_number,rating,labelled_address,status,created_on,updated_on
+	</sql>
+
+	<insert id="insertCustomer" parameterType="com.customer.model.CustomerInfo">
+		INSERT INTO
+		customer_registration
+		(
+		<include refid="customer_reg_result_set" />
+		)
+
+		VALUES
+		(
+		#{customerId},
+		#{name},
+		#{emailId},
+		#{contactNumber},
+		#{rating},
+		#{labelledAddress},
+		#{status},
+		#{createdOn},
+		#{updatedOn}
+		);
+	</insert>
+
+	<select id="getCustomerInfoByEmailId" parameterType="java.lang.String"
+		resultMap="customer_reg_result_map">
+		SELECT
+		<include refid="customer_reg_result_set" />
+		FROM customer_registration WHERE
+		email_id = 'abc'
+	</select>
+</mapper>
